@@ -1,0 +1,15 @@
+const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const user = {
+        username,
+        password,
+    };
+
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+    })
