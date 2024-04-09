@@ -1,0 +1,23 @@
+const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const user = {
+        username,
+        password,
+        email,
+        address,
+        phone,
+    };
+
+    fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            // Xử lý dữ liệu trả về từ backend
+        });
+};
