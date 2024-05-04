@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-NetApplication<net>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.fastshop.net.NetApplication",
+            "projectName": "net",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
