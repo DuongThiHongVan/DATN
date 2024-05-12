@@ -1,0 +1,147 @@
+.btn, textarea, input, select {
+    box-shadow: none !important;
+}
+
+.error {
+    color: red !important;
+    font-style: italic;
+}
+
+#eye {
+    cursor: pointer;
+}
+
+input, a {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+li.nav-item {
+    margin-right: 3px;
+}
+
+#gallery-page .col-sm-6 {
+    position: relative;
+}
+
+#gallery-page .col-lg-3:hover img {
+    box-shadow: rgba(177, 40, 40, 0.2);
+    transition: 0.55s;
+}
+
+#gallery-page .col-sm-6 img.col-2{
+    position: absolute; 
+    z-index: 1; 
+    width: 70px; 
+    height: 70px;
+}
+
+
+#gallery-page .col-sm-6  a{
+    text-decoration: none;
+}
+
+#gallery-page .col-sm-6 .card img{
+    height: 13rem;
+}
+
+#gallery-page .col-sm-6 .card .card-body {
+    position: relative;
+    height: 6rem;
+}
+
+#gallery-page .col-sm-6 .card .card-body .star-evaluate {
+    position: absolute;
+    bottom: 30px;
+}
+
+#gallery-page .col-sm-6 .card .card-body .product-name {
+    font-size: 12px;
+}
+
+#gallery-price {
+    position: absolute;
+    bottom: 0;
+}
+
+
+
+/* --------------------------  filter  ------------------------- */
+#modal-filter .modal-dialog .modal-content .modal-body .row a{
+    text-decoration: none;
+    font-size: 11px;
+    vertical-align: bottom;
+}
+
+
+#modal-filter .modal-dialog .modal-content .modal-body .row a:hover {
+    color: black !important;
+}
+
+#modal-filter .modal-dialog .modal-content .modal-body .row span.form-check-label {
+    font-size: 12px;
+}
+
+
+#modal-filter .modal-dialog .modal-content .modal-body .row .price a > span{
+    font-size: 13px;
+    margin-bottom: 6px;
+    margin-right: 3px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* -------------------------- menu search --------------------------- */
+.menu-search {
+    width: 100%; 
+    height: max-content; 
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 5px 20px rgb(229, 229, 229);
+    display: none;
+}
+
+.menu-search a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.menu-search span.text-cancel svg:hover {
+    color: orange;
+}
+
+.menu-search .show-key:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+.menu-search img.img-visited {
+    width: 40px;
+}
+
+.menu-search img.img-cancel {
+    width: 20px;
+}
+
+
+
+
+/* star */
+.star-rating {
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .star {
+    font-size: 2rem;
+    color: #ff9800;
+    background-color: unset;
+    border: none;
+    line-height: 15px;
+  }
+
+  .star:hover {
+    cursor: pointer;
+
+  }
+
+

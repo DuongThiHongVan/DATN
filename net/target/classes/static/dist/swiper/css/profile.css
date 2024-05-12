@@ -1,0 +1,20 @@
+.list-profile{
+    list-style-type: none !important;
+    text-align: start;
+    margin-top: -20px;
+}
+
+.list-profile li {
+    font-size: 13px;
+    margin-left: -14px;
+    padding: 7px;
+    margin-bottom: 2px;
+}
+
+.list-profile li:hover {
+    background-color: #F2F2F2;
+}
+
+.list-profile li > a {
+    text-decoration: none;
+}
