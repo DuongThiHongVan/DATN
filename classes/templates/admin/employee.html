@@ -1,0 +1,225 @@
+<div th:fragment="subfragment" class="page-wrapper">
+  <style>
+    .form-group.invalid .form-message {
+      transition: 0.8s ease;
+      color: #f33a58;
+    }
+
+    .form-message {
+      font-size: 12px;
+      padding: 4px 0 0;
+    }
+
+    .btn-setup {
+      background: linear-gradient(0deg, #e4eaec 0%, white 65%);
+      border: 1px solid lightgray; 
+      border-radius: 5px; 
+      font-weight: 600;
+    }
+
+    .btn-setup:hover {
+      background: linear-gradient(0deg, #DFF6FF 0%, white 85%);
+      cursor: pointer;
+      border: 1px solid lightgray; 
+      border-radius: 5px; 
+    }
+  </style>
+  <div ng-controller="admin-employee">
+    <!-- page employee -->
+    <div class="page-wrapper bg-white ps-4 pe-4 mt-4 mb-4" id="show-up">
+      <div class="container">
+        <div class="page-header d-print-none">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <h2 class="page-title mb-3">
+                <span class="me-2">Danh sách nhân viên</span>
+                <span type="text" class="badge fs-5 bg-danger">[[${employees.size() + ' nhân viên'}]]</span>
+              </h2>
+
+              <div class="d-flex justify-content-between">
+                <form th:action="@{/account/search}" method="get">
+                  <input name="keyword" type="text" style="width: 300px; height: 35px; padding-left: 10px;"
+                    placeholder="Tìm kiếm với username ...">
+                  <button type="submit" class="btn btn-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                      class="bi bi-search" viewBox="0 0 16 16">
+                      <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                  </button>
+                </form>
+
+
+                <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-employee"
+                  role="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  Thêm nhân viên
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container-xl">
+          <div class="row row-cards">
+            <div class="table-responsive">
+              <table class="table table-borderless table-hover card-table">
+                <thead>
+                  <tr>
+                    <th>STT.</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Trạng thái</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-light">
+                  <tr th:each="e, index : ${employees}">
+                    <td class="text-primary" style="font-weight: 500;">[[${index.index + 1}]]</td>
+                    <td class="text-muted">[[${e.username}]]</td>
+                    <td class="text-muted">[[${e.fullname}]]</td>
+                    <td class="text-muted">[[${e.email}]]</td>
+                    <td class="text-muted">[[${e.phone}]]</td>
+                    <td>
+                      <a href="#" class="bg-white p-2" data-bs-toggle="modal"
+                        th:data-bs-target="${'#modal-delete-' + e.username}" style="border-radius: 50%;">
+                        <svg th:if="${e.active}" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                          fill="currentColor" class="bi bi-plug-fill text-danger" viewBox="0 0 16 16">
+                          <path
+                            d="M6 0a.5.5 0 0 1 .5.5V3h3V.5a.5.5 0 0 1 1 0V3h1a.5.5 0 0 1 .5.5v3A3.5 3.5 0 0 1 8.5 10c-.002.434-.01.845-.04 1.22-.041.514-.126 1.003-.317 1.424a2.083 2.083 0 0 1-.97 1.028C6.725 13.9 6.169 14 5.5 14c-.998 0-1.61.33-1.974.718A1.922 1.922 0 0 0 3 16H2c0-.616.232-1.367.797-1.968C3.374 13.42 4.261 13 5.5 13c.581 0 .962-.088 1.218-.219.241-.123.4-.3.514-.55.121-.266.193-.621.23-1.09.027-.34.035-.718.037-1.141A3.5 3.5 0 0 1 4 6.5v-3a.5.5 0 0 1 .5-.5h1V.5A.5.5 0 0 1 6 0z" />
+                        </svg>
+
+                        <svg th:if="${!e.active}" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                          fill="currentColor" class="bi bi-plug-fill text-dark" viewBox="0 0 16 16">
+                          <path
+                            d="M6 0a.5.5 0 0 1 .5.5V3h3V.5a.5.5 0 0 1 1 0V3h1a.5.5 0 0 1 .5.5v3A3.5 3.5 0 0 1 8.5 10c-.002.434-.01.845-.04 1.22-.041.514-.126 1.003-.317 1.424a2.083 2.083 0 0 1-.97 1.028C6.725 13.9 6.169 14 5.5 14c-.998 0-1.61.33-1.974.718A1.922 1.922 0 0 0 3 16H2c0-.616.232-1.367.797-1.968C3.374 13.42 4.261 13 5.5 13c.581 0 .962-.088 1.218-.219.241-.123.4-.3.514-.55.121-.266.193-.621.23-1.09.027-.34.035-.718.037-1.141A3.5 3.5 0 0 1 4 6.5v-3a.5.5 0 0 1 .5-.5h1V.5A.5.5 0 0 1 6 0z" />
+                        </svg>
+                      </a>
+
+
+                      <div class="modal modal-blur fade" th:id="${'modal-delete-' + e.username}" tabindex="-1"
+                        role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-status bg-danger"></div>
+                            <div class="modal-body text-center py-4">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24"
+                                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 9v2m0 4v.01"></path>
+                                <path
+                                  d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75">
+                                </path>
+                              </svg>
+                              <h3 class="text-dark">Đổi <strong class="text-primary">active</strong> cho <span
+                                  class="text-dark">' [[${e.username}]] '</span> này ?</h3>
+
+                              <div class="text-muted">Tất cả các dữ liệu về nhân viên này sẽ disable hoặc enable trong
+                                server. Cẩn thận khi thao tác !</div>
+                            </div>
+                            <div class="modal-footer">
+                              <div class="w-100">
+                                <div class="row">
+                                  <div class="col">
+                                    <a href="#" class="btn btn-light w-100" data-bs-dismiss="modal">
+                                      Hủy thao tác
+                                    </a>
+                                  </div>
+                                  <div class="col">
+                                    <a th:href="${'/account/active/'+e.username}" class="btn btn-danger w-100">
+                                      Đổi hiệu lực
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- modal add employee -->
+      <div class="modal modal-blur fade" id="modal-employee" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content p-2">
+            <div class="modal-header">
+              <h5 class="modal-title text-primary">Biểu mẫu thêm nhân viên</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="post" action="/account/add" th:object="${staff}" id="form-1">
+                <div class="form-group mb-2">
+                  <label for="username"><b class="text-danger">*</b> Tên đăng nhập:</label>
+                  <input type="text" th:field="*{username}" id="username" class="form-control" name="username"
+                    autocomplete="off">
+                  <span class="form-message"></span>
+                </div>
+                <div class="form-group mb-2">
+                  <label for="email"><b class="text-danger">*</b> Email:</label>
+                  <input type="email" th:field="*{email}" id="email" class="form-control" autocomplete="off">
+                  <span class="form-message"></span>
+                </div>
+                <div class="form-group mb-2">
+                  <label for="pwd"><b class="text-danger">*</b> Mật khẩu:</label>
+                  <input type="password" th:field="*{password}" id="pwd" class="form-control" autocomplete="off">
+                  <span class="form-message"></span>
+                </div>
+                <div class="form-group mb-2">
+                  <label for="fullname"><b class="text-danger">*</b> Họ và tên:</label>
+                  <input type="text" th:field="*{fullname}" class="form-control" id="fullname" name="fullname"
+                    autocomplete="off">
+                  <span class="form-message"></span>
+                </div>
+                <div class="form-group mb-2">
+                  <label for="phone"><b class="text-danger">*</b> Số điện thoại:</label>
+                  <input type="text" th:field="*{phone}" id="phone" class="form-control" autocomplete="off">
+                  <span class="form-message"></span>
+                </div>
+                <div class="form-group mb-2">
+                  <input type="checkbox" th:field="*{active}" checked style="vertical-align: middle;" name="active">
+                  <label for="active">Hoạt động</label>
+                </div>
+                <button class="btn btn-primary mt-2 form-submit">
+                  Hoàn thành
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script th:src="@{/dist/js/validate.js}"></script>
+  <script>
+    Validator({
+      form: '#form-1',
+      errorElement: '.form-message',
+      rules: [
+        Validator.isRequired('#fullname', 'Mời bạn nhập trường này'),
+        Validator.isPhone('#phone', 'Vui lòng nhập số điện thoại chính xác gồm 10 số,Nếu không nhập 0 thì còn 9 số'),
+        Validator.isRequired('#username', 'Mời bạn nhập trường này'),
+        Validator.isEmail('#email', 'Vui lòng nhập email chính xác'),
+        Validator.isPassword('#pwd', 6),
+      ]
+    })
+  </script>
+</div>

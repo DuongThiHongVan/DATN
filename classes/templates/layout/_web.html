@@ -1,0 +1,110 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org" th:fragment="dynamic(view)">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>[[${title_main}]]</title>
+    <style>
+      @import url('https://rsms.me/inter/inter.css');
+      :root {
+      	--tblr-font-sans-serif: Inter,-apple-system,BlinkMacSystemFont,San Francisco,Segoe UI,Roboto,Helvetica Neue,sans-serif !important;
+      }
+    </style>
+    <!-- CSS files -->
+    <link th:href="@{/dist/css/tabler.min.css}" rel="stylesheet"/>
+    <link th:href="@{/dist/css/tabler-flags.min.css}" rel="stylesheet"/>
+    <link th:href="@{/dist/css/tabler-payments.min.css}" rel="stylesheet"/>
+    <link th:href="@{/dist/css/tabler-vendors.min.css}" rel="stylesheet"/>
+    <link th:href="@{/dist/css/demo.min.css}" rel="stylesheet"/>
+    <link th:href="@{/dist/css/all_feature.css}" rel="stylesheet"/>
+    <link rel="shortcut icon" th:href="@{/dist/img/logo/logo_favicon.png}" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </head>
+  <body ng-app="app">
+    <div class="page" style="position: relative;">
+      <header class="navbar navbar-expand-md navbar-light d-print-none">
+        <div class="container-xl">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          
+          <!-- logo -->
+          <h1 th:replace="~{/layout/_logo::logo}"></h1>
+
+          <div class="navbar-nav flex-row order-md-last">
+            
+            <!-- language -->
+            <div th:replace="~{/layout/_language::language}"></div>
+            
+            <!-- mode light dark and cart -->
+            <div th:replace="~{/layout/_mode_cart::mode_cart}"></div>
+
+
+            <!-- account -->
+            <div th:replace="${auth == null} ? ~{/layout/_account :: header-nb} : ~{/layout/_account :: header-sb}"></div>
+
+
+          </div>
+        </div>
+      </header>
+
+
+
+      <!-- menu -->
+      <div class="navbar-expand-md">
+        <th:block th:if="${auth != null}">
+          <th:block th:if="${auth.role.id == 'ADMIN'}">
+            <div th:insert="~{/layout/_menu :: menu-admin}" class="navbar-expand-md"></div>
+          </th:block>
+          <th:block th:if="${auth.role.id == 'STAFF'}">
+            <div th:insert="~{/layout/_menu :: menu-staff}" class="navbar-expand-md"></div>
+          </th:block>
+          <th:block th:if="${auth.role.id == 'USER'}">
+            <div th:insert="~{/layout/_menu :: menu-user}" class="navbar-expand-md"></div>
+          </th:block>
+        </th:block>
+        <th:unless th:if="${auth == null}">
+          <div th:insert="~{/layout/_menu :: menu-user}" class="navbar-expand-md"></div>
+        </th:unless>
+      </div>
+
+
+
+      <!-- main -->
+      <div class="page-wrapper">
+        <div class="container-xl">
+          <div class="page-wrapper" th:replace="${view}"></div>
+        </div>
+      </div>
+
+
+      <!-- footer -->
+      <th:block th:if="${auth != null}">
+        <th:block th:if="${auth.role.id == 'USER' }">
+          <footer th:replace="~{/layout/_footer::footer}"></footer>
+        </th:block>
+      </th:block>
+      <th:unless th:if="${auth == null}">
+        <footer th:replace="~{/layout/_footer::footer}"></footer>
+      </th:unless>
+    </div>
+    <script th:src="@{/angular/sumary.js}"></script>
+    <script th:src="@{/dist/js/all_feature.js}" type="text/javascript" defer></script>
+    <script th:src="@{/dist/libs/apexcharts/dist/apexcharts.min.js}" type="text/javascript" defer></script>
+    <script th:src="@{/dist/libs/jsvectormap/dist/js/jsvectormap.min.js}" type="text/javascript" defer></script>
+    <script th:src="@{/dist/libs/jsvectormap/dist/maps/world.js}" type="text/javascript" defer></script>
+    <script th:src="@{/dist/libs/jsvectormap/dist/maps/world-merc.js}" type="text/javascript" defer></script>
+    
+    <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
+    <script th:src="@{/lib/easing/easing.min.js}"></script>
+    <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
+
+    <script th:src="@{/dist/js/tabler.min.js}" type="text/javascript" defer></script>
+    <script th:src="@{/dist/js/demo.min.js}" type="text/javascript" defer></script>
+  </body>
+</html>

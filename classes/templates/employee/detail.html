@@ -1,0 +1,116 @@
+<div th:fragment="subfragment" class="page-wrapper">
+  <div class="page-wrapper" style="margin-bottom: 50px;">
+    <div class="container-fluid mt-4 mb-4 bg-white" ng-controller="detail-staff">
+      <div class="row pt-4">
+        <div class="col-lg-5 mb-30">
+          <div id="product-carousel" class="carousel slide" data-ride="carousel"  style="position: relative;">
+            <div class="carousel-inner">
+              <div class="carousel-item d-flex justify-content-center active pt-3 pb-3">
+                <img style="width: 70%; border-radius: 5px;" th:src="@{${'/dist/img/products/'+{product.image}}}" class="bg-white" alt="Image">
+              </div>
+            </div>
+            <div class="text-center mt-2">
+              <div class="text-center fs-5 text-danger">
+                ( * Nhấn để xem thông tin đã load lên trang chính )
+              </div>
+              <span style="font-size: 20px; font-weight: bold;">ID = </span>
+              <a th:href="@{${'/user/detail/' + product.id }}" style="font-size: 20px; font-weight: bold;">
+                [[${product.id}]]
+              </a>
+            </div>
+            <a class="carousel-control-prev text-muted" href="#product-carousel" data-slide="prev">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+              </svg>
+            </a>
+            <a class="carousel-control-next text-muted" href="#product-carousel" data-slide="next">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-7 h-auto mb-4">
+          <div class="h-100 bg-white text-dark">
+            <h1>[[${product.name}]]</h1>
+            
+            <!-- thông tin chi tiết -->
+            <div class="mt-4 bg-white row">
+              <h2 class="mb-4 text-primary" style="font-style: italic;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill me-3" viewBox="0 0 16 16">
+                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+                Thông tin chi tiết
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill ms-3" viewBox="0 0 16 16">
+                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+              </h2>
+              <div class="tab-pane fade show active" id="tab-pane-2">
+                <div class="row">
+                  <input type="hidden" name="id_product_staff" id="id_product_staff" th:value="${product.id}">
+                  <div>
+                    <div class="form-group mb-3" ng-if="productdetails.length > 0" ng-repeat="detail in productdetails">
+                      <h4 class="mb-1">{{ $index + 1 }} - {{detail.property}} :</h4>
+                      <textarea class="form-control text-muted" rows="{{ detail.property == 'Thành phần bia' ? 7 : detail.property == 'Hướng dẫn sử dụng' ? 3 : 1 }}" ng-model="detail.info">{{detail.info}}</textarea>
+                    </div>
+                    <button type="submit" ng-if="confirm == false" ng-click="add()" class="btn btn-warning">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-bar-up me-2" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 10a.5.5 0 0 0 .5-.5V3.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 3.707V9.5a.5.5 0 0 0 .5.5zm-7 2.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5z"/>
+                      </svg>
+                      Đăng thông tin
+                    </button>
+
+                    
+                    <button type="submit" ng-if="confirm == true" ng-click="update()" class="btn btn-outline-primary">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-bar-up me-2" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 10a.5.5 0 0 0 .5-.5V3.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 3.707V9.5a.5.5 0 0 0 .5.5zm-7 2.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5z"/>
+                      </svg>
+                      Cập nhật thông tin
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Mô tả sản phẩm -->
+        <form th:action="@{${'/staff/describe/' + product.id}}" method="post" class="form-group mb-3 mt-3">
+          <h3 class="mb-1 text-primary">Mô tả sản phẩm</h3>
+          <textarea class="form-control mb-3" id="myTextArea" rows="10" name="describe">[[ ${product.describe} ]]</textarea>
+          <button type="submit" class="btn btn-outline-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-vector-pen me-2" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
+              <path fill-rule="evenodd" d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+            </svg>
+            Thêm mô tả
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#myTextArea").emojioneArea({
+        pickerPosition: "bottom"
+      })
+    })
+  </script>
+  <link rel="stylesheet" th:href="@{/dist/css/detail.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css"
+    integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</div>
