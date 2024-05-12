@@ -1,0 +1,130 @@
+<!doctype html>
+<html xmlns="https://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Fastshop - Đăng nhập tài khoản</title>
+    <!-- CSS files -->
+    <link th:href="@{/dist/css/tabler.min.css}" rel="stylesheet"/>
+    <link th:href="@{/dist/css/tabler-flags.min.css}" rel="stylesheet"/>
+    <link th:href="@{/dist/css/tabler-payments.min.css}" rel="stylesheet"/>
+    <link th:href="@{/dist/css/tabler-vendors.min.css}" rel="stylesheet"/>
+    <link th:href="@{/dist/css/demo.min.css}" rel="stylesheet"/>
+    <link th:href="@{/dist/css/all_feature.css}" rel="stylesheet"/>
+    <link rel="shortcut icon" th:href="@{/dist/img/logo/logo_favicon.png}" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  </head>
+  <body class="d-flex flex-column">
+    <div class="border-top-wide border-primary page page-center">
+      <div class="container-tight py-4">
+        <form th:object="${dtoLogin}" th:action="@{/auth/login}" class="card card-md" method="post">
+          <div class="card-body">
+            <div class="text-center mb-4">
+              <a href="/fastshop.com" class="d-flex justify-content-center mb-2">
+                <img th:src="@{/dist/img/logo/logo_hien.png}" alt="Tabler" class="navbar-brand-image">
+              </a>
+            </div>
+            <h2 class="card-title text-center mb-4">Đăng nhập tài khoản của bạn</h2>
+            <div class="mb-3">
+              <label class="form-label">Địa chỉ email</label>
+
+              <!-- this is input username or email -->
+              <input th:field="*{usernameOrEmail}" type="text" class="form-control" placeholder="Email hoặc username ..." autocomplete="off">
+              <!-- this is error for username or email -->
+              <i class="error" th:errors="*{usernameOrEmail}"></i>
+
+
+            </div>
+            <div class="mb-2">
+              <label class="form-label">
+                Mật khẩu
+                <span class="form-label-description">
+                  <a href="/forgot">Quên mật khẩu ?</a>
+                </span>
+              </label>
+              <div class="input-group input-group-flat">
+
+                <!-- this is input password -->
+                <input th:field="*{password}" id="password-login" type="password" class="form-control"  placeholder="Mật khẩu"  autocomplete="off">
+
+                <span class="input-group-text">
+                  <a href="#" class="link-secondary">
+                    <!-- icon eye -->
+                  <svg xmlns="http://www.w3.org/2000/svg" id="eye-login" width="21" height="21" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                  </svg>
+
+                  <!-- icon eye slash -->
+                  <svg xmlns="http://www.w3.org/2000/svg" id="eye-hide" width="21" height="21" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+                    <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+                    <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+                    <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+                  </svg>
+
+                  </a>
+                </span>
+              </div> 
+
+              <!-- this is error password -->
+              <i class="error" th:errors="*{password}"></i>
+
+            </div>
+            
+            <!-- this is error message sumary -->
+            <i class="error" th:text="${message}"></i>
+            
+            
+            <div class="form-footer">
+              <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+            </div>
+          </div>
+          <div class="hr-text">hoặc</div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <a href="/oauth2/authorization/facebook" class="btn btn-white w-100">
+                  <svg xmlns="http://www.w3.org/2000/svg" style="color: #0d6efd; margin-right: 5px;" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                  </svg>
+                  Đăng ký Facebook
+                </a>
+              </div>
+              <div class="col">
+                <a href="/oauth2/authorization/google" class="btn btn-white w-100">
+                  <svg xmlns="http://www.w3.org/2000/svg" style="color: #dc3545; margin-right: 5px;" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                    <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"></path>
+                  </svg>
+                  Đăng ký Google
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="text-center text-muted mt-3">
+          Bạn đã có tài khoản chưa? <a href="/signup" tabindex="-1">Đăng ký</a>
+        </div>
+      </div>
+    </div>
+    <script>
+      $('#eye-hide').hide();
+      // this is function which to convert password input to text input
+      $('#eye-login').click(function(){
+        $('#eye-login').hide();
+        $('#eye-hide').show();
+        $('#password-login').attr('type','text');
+      });
+      $('#eye-hide').click(function(){
+        $('#eye-login').show();
+        $('#eye-hide').hide();
+        $('#password-login').attr('type','password');
+      });
+    </script>
+    <!-- Libs JS -->
+    <!-- Tabler Core -->
+    <script th:src="@{/dist/js/tabler.min.js}" defer></script>
+    <script th:src="@{/dist/js/demo.min.js}" defer></script>
+  </body>
+</html>

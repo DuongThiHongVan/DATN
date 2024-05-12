@@ -1,0 +1,106 @@
+<div th:fragment="mode_cart" class="d-none d-md-flex">
+  <a href="?theme=dark" class="nav-link px-0 ms-2 hide-theme-dark" title="Chế độ tối" data-bs-toggle="tooltip" data-bs-placement="bottom">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
+  </a>
+  <a href="?theme=light" class="nav-link px-0 ms-2 hide-theme-light" title="Chế độ sáng" data-bs-toggle="tooltip" data-bs-placement="bottom">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="4" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
+  </a>
+
+  <th:block th:if="${auth != null}">
+    <div ng-controller="mode-cart-ctrl">
+      <div th:if="${auth.role.id == 'USER'}" class="nav-item dropdown d-none d-md-flex me-3">
+        <a href="/user/checkout" data-bs-toggle="tooltip" title="Xem giỏ hàng" data-bs-placement="bottom" tabindex="-1" aria-label="Show notifications" class="mt-2 nav-link px-0">
+          
+          <!-- giỏ hàng icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <circle cx="6" cy="19" r="2"></circle>
+            <circle cx="17" cy="19" r="2"></circle>
+            <path d="M17 17h-11v-14h-2"></path>
+            <path d="M6 5l14 1l-1 7h-13"></path>
+          </svg>
+          <span class="badge bg-red" style="border-radius: 50%;" id="number">0</span>
+        </a>
+      </div>
+  
+  
+  
+      <!-- notification when add item -->
+      <div class="toast toast-add border" data-autohide="false" style="position: absolute; top: 52px; right: 7%; width: 16%; z-index: 3;">
+        <div class="toast-header bg-light d-flex justify-content-between">
+          <strong class="mr-auto text-primary">Thông báo</strong>
+        </div>
+        <div class="toast-body">
+          <svg xmlns="http://www.w3.org/2000/svg" style="color: #04AA6D;" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+          </svg>
+          <span id="toast-number">Thêm sản phẩm thành công</span>
+          <div class="mt-2">
+            <a href="/user/checkout" class="text-danger" style="text-decoration: none;"><button class="btn " style="width: 100%;">Xem giỏ hàng</button></a>
+          </div>
+        </div>
+      </div>
+  
+  
+  
+      <div th:if="${auth.role.id == 'ADMIN' || auth.role.id == 'STAFF'}" class="nav-item dropdown d-none d-md-flex me-2 mt-2">
+        <span class="badge bg-red" style="border-radius: 50%;" id="number" hidden></span>
+        <a href="#" class="nav-link px-0 me-1" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
+          <!-- thông báo icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path>
+            <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+          </svg>
+          <span class="badge bg-red" style="border-radius: 50%;">[[${count_notify.size()}]]</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Thông báo của bạn</h3>
+            </div>
+            <div class="list-group list-group-flush list-group-hoverable" style="height: 420px; overflow-y: scroll;">
+  
+              <!-- display for staff -->
+              <div class="list-group-item" ng-repeat="notify in count_notify">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span ng-if="notify.status == false" class="status-dot status-dot-animated bg-red d-block"></span>
+                    <span ng-if="notify.status == true" class="status-dot status-dot-animated bg-green d-block"></span>
+                  </div>
+                  <div class="col text-truncate pe-4 me-2" th:if="${auth.role.id == 'ADMIN'}" style="width: 450px;">
+                    <a href="#" ng-click="update_status(notify.id)" class="text-body d-block">{{notify.title}}</a>
+                    <div class="d-block text-muted pe-2 fs-5">{{notify.fileName}}</div>
+                  </div>
+                  <div class="col text-truncate pe-4 me-2" th:if="${auth.role.id == 'STAFF'}" style="width: 450px;">
+                    <span ng-click="update_status(notify.id)" class="text-body d-block">{{notify.title}}</span>
+                    <div class="d-block text-muted pe-2 fs-5">{{notify.fileName}}</div>
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </th:block>
+
+
+
+  <!-- đây là thanh khi mà auth là null -->
+  <div th:if="${auth == null}" class="nav-item dropdown d-none d-md-flex me-3">
+    <a href="/login" class="nav-link px-0" data-bs-toggle="tooltip" title="Xem giỏ hàng" data-bs-placement="bottom" tabindex="-1" aria-label="Show notifications">
+      
+      <!-- giỏ hàng icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <circle cx="6" cy="19" r="2"></circle>
+        <circle cx="17" cy="19" r="2"></circle>
+        <path d="M17 17h-11v-14h-2"></path>
+        <path d="M6 5l14 1l-1 7h-13"></path>
+      </svg>
+      <span class="badge bg-red" style="border-radius: 50%;" id="number">0</span>
+    </a>
+  </div>
+</div>

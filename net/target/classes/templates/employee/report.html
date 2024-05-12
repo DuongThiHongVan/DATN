@@ -1,0 +1,499 @@
+<div th:fragment="subfragment" class="page-wrapper">
+  <style>
+
+  </style>
+  <div class="container d-flex justify-content-center">
+    <div class="page">
+      <div class="page-wrapper" ng-controller="report-staff-ctrl">
+        <div class="container-xl">
+          <!-- Page title -->
+          <div class="page-header d-print-none">
+            <div class="row g-2 align-items-center">
+              <div class="col"></div>
+
+              <!-- Page title actions -->
+              <div class="col-12 col-md-auto ms-auto d-print-none">
+                <button class="btn btn-default border-warning" data-bs-toggle="modal" data-bs-target="#modal-sent-docs" >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2 bi bi-send text-warning" viewBox="0 0 16 16">
+                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                  </svg>
+                  Gửi ngay
+                </button>
+
+                <button type="button" class="btn btn-default border-primary" onclick="javascript:window.print();">
+                  <!-- Download SVG icon from http://tabler-icons.io/i/printer -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon text-primary" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
+                    <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
+                    <rect x="7" y="13" width="10" height="8" rx="2"></rect></svg>
+                    In báo cáo
+                </button>
+              </div>
+
+              <!-- send document -->
+              <div class="modal modal-blur fade" id="modal-sent-docs" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <form action="/notify/add" method="post" enctype="multipart/form-data" class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Gửi báo cáo - <span class="text-start text-warning">[[${now}]]</span></h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg-white">
+                      <div class="row mb-3 align-items-end">
+                        <div class="col">
+                          <label class="form-label text-black">
+                            Nội dung cần gửi: 
+                          </label>
+                          <textarea rows="7" class="form-control" placeholder="Nhập tiêu đề ..." ></textarea>
+                        </div>
+                      </div>
+                      <div>
+                        <input type="file" name="fileNames" id="listPDF" accept=".pdf" required/>
+                        <input type="hidden" name="txtFileList" />
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Gửi ngay</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="page-body">
+          <div class="container-xl">
+            <div class="card card-lg">
+              <div class="card-body border">
+                <div class="row">
+                  <div class="card">
+                    <div class="card-body">
+                      <h1 class="card-title text-center fs-1 mt-4" style="font-weight: bolder;">BẢNG BÁO CÁO THỐNG KÊ HẰNG THÁNG</h1>
+                      <p class="text-center">............oOo............</p>
+                      <div class="modal-body">
+                        <div class="mb-3">
+                          <p>- Ngày báo cáo hôm nay : <b>[[${now}]]</b></p>
+                          <p>- Địa điểm trụ sở : 123 Tôn Đức Thắng, Quận Thanh Khê, TP.Đà Nẵng</p>
+                          <p>- Liên hệ thông tin : [[${auth.account.phone}]]</p>
+                          <label class="form-label mt-4">Tên người thực hiện :</label>
+                          <input type="text" class="form-control" name="example-text-input" th:value="${auth.account.fullname}" readonly>
+                        </div>
+                        <div class="mb-1">
+                          <label class="form-label">Chọn báo cáo :</label>
+                          <div class="form-group">
+                            <select class="form-control" onchange="reportNumber()" id="select-report">
+                              <option value="1">Báo cáo doanh thu từng sản phẩm</option>
+                              <option value="2">Báo cáo doanh thu từng mặt hàng</option>
+                              <option value="3">Báo cáo lương nhân viên</option>
+                              <option value="4">Thống kê hàng đang tồn kho</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- report báo cáo số lượng -->
+                      <div class="card" id="report-id-1">
+                        <div class="table-responsive">
+                          <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
+                              <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng bán</th>
+                                <th>Đơn giá ($)</th>
+                                <th>Doanh thu VNĐ</th>
+                                <th>Chi phí VNĐ</th>
+                                <th>Lợi nhuận VNĐ</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-if="indexes_1.length > 0" ng-repeat="n in indexes_1">
+                                <td>
+                                  <input type="text" style="width: 290px;" value="{{n.name}}"  data-bs-toggle="modal" data-bs-target="#modal-report-id-1" readonly />
+                                </td>
+                                <td>
+                                  <input type="number" min="0" style="width: 100px;" ng-model="n_1" placeholder="-" />
+                                </td>
+                                <td>
+                                  <input type="number" min="0" style="width: 150px;" value="{{n.price}}" placeholder="-" disabled />
+                                </td>
+                                <td>
+                                  <input type="number" min="0" style="width: 160px;" value="{{n_1 * n.price *100/100}}" disabled />
+                                </td>
+                                <td>
+                                  <input type="number" min="0" style="width: 160px;" ng-model="n_3" placeholder="-">
+                                </td>
+                                <td>
+                                  <input type="number" min="0" style="width: 110px;" value="{{ (n_1 * n.price - n_3).toFixed(2) }}" disabled />
+                                </td>
+                              </tr>
+
+                              <tr ng-if="indexes_1.length == 0">
+                                <td>
+                                  <input type="text" value="-" style="width: 290px; border: 1px solid green;" data-bs-toggle="modal" data-bs-target="#modal-report-id-1" readonly>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 100px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 150px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 160px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 160px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 110px;" disabled>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+
+                      
+                      <div class="modal modal-blur fade" id="modal-report-id-1" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">LỰA CHỌN SẢN PHẨM</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <label class="ms-3 mt-2">Tìm kiếm</label>
+                            <div class="row me-3 ms-3 pb-2 border-bottom">
+                              <input type="text" ng-model="getItems" placeholder="Nhập từ khóa ..." class="fs-5 p-2">
+                            </div>
+                            <div class="modal-body">
+                              <!-- this is show all of order before -->
+                              <div class="row d-flex justify-content-between align-items-center bg-white p-2 border mb-2" ng-repeat="product in items|filter:getItems">
+                                  <span class="text-truncate">
+                                    <input type="checkbox" id="pro-name-{{product.id}}" ng-click="add_1(product)" class="me-2">
+                                    <label for="pro-name-{{product.id}}">{{product.name}}</label>
+                                  </span>
+                              </div>
+                  
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn mt-2" data-bs-dismiss="modal">
+                                Chấp nhận
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--  -->
+
+
+
+                      <!-- report báo cáo category -->
+                      <div class="card" id="report-id-2">
+                        <div class="table-responsive">
+                          <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
+                              <tr>
+                                <th>Thể loại sản phẩm</th>
+                                <th>Doanh thu nay (VND)</th>
+                                <th>Chi phí nhập hàng</th>
+                                <th>Lợi nhuận</th>
+                                <th>Tỷ suất lợi nhuận %</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-if="indexes_2.length > 0" ng-repeat="c in indexes_2">
+                                <td>
+                                  <input type="text" style="width: 150px;" value="{{c.name}}" data-bs-toggle="modal" data-bs-target="#modal-report-id-2" readonly>
+                                </td>
+                                <td>
+                                  <input type="number" min="0" style="width: 230px;" ng-model="c_1" placeholder="-"/>
+                                </td>
+                                <td>
+                                  <input type="number" min="0" style="width: 230px;" ng-model="c_2" placeholder="-"/>
+                                </td>
+                                <td>
+                                  <input type="number" min="0" style="width: 220px;" value="{{ c_1 - c_2 }}" disabled />
+                                </td>
+                                <td>
+                                  <input type="number" min="0" style="width: 130px;" value="{{ (((c_1 - c_2)*100/c_1)).toFixed(2)  }}" disabled />
+                                </td>
+                              </tr>
+
+                              <tr ng-if="indexes_2.length == 0">
+                                <td>
+                                  <input type="text" style="width: 150px; border: 1px solid green;" value="-" data-bs-toggle="modal" data-bs-target="#modal-report-id-2" readonly>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 230px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 230px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 220px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 130px;" disabled>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+
+                      <div class="modal modal-blur fade" id="modal-report-id-2" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">LỰA CHỌN THỂ LOẠI SẢN PHẨM</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <label class="ms-3 mt-2">Tìm kiếm</label>
+                            <div class="row me-3 ms-3 pb-2 border-bottom">
+                              <input type="text" ng-model="getCate" placeholder="Nhập từ khóa ..." class="fs-5 p-2">
+                            </div>
+                            <div class="modal-body">
+                              <!-- this is show all of order before -->
+                              <div class="row d-flex justify-content-between align-items-center bg-white p-2 border mb-2" ng-repeat="category in categories|filter:getCate">
+                                  <span class="text-truncate">
+                                    <input type="checkbox" id="cat-name-{{category.id}}" ng-click="add_2(category)" class="me-2">
+                                    <label for="cat-name-{{category.id}}">{{category.name}}</label>
+                                  </span>
+                              </div>
+                  
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn mt-2" data-bs-dismiss="modal">
+                                Chấp nhận
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--  -->
+
+
+
+                      <!-- report báo cáo lương nhân viên -->
+                      <div class="card" id="report-id-3">
+                        <div class="table-responsive">
+                          <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
+                              <tr>
+                                <th>ID</th>
+                                <th>Tên nhân viên</th>
+                                <th>Lương cứng VNĐ</th>
+                                <th>Tiền trợ cấp VNĐ</th>
+                                <th>Tổng tiền VNĐ</th>
+                                <th>Chức vụ</th>
+                                <th>Số buổi vắng</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-if="indexes_3.length > 0" ng-repeat="e in indexes_3">
+                                <td>
+                                  <input type="text" style="width: 120px;" value="{{e.account.username}}" data-bs-toggle="modal" data-bs-target="#modal-report-id-3" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 200px;" value="{{e.account.fullname}}" readonly>
+                                </td>
+                                <td>
+                                  <input type="number" min="0"  style="width: 150px;" ng-model="e_1" placeholder="-">
+                                </td>
+                                <td>
+                                  <input type="number" min="0"  style="width: 150px;" ng-model="e_2" placeholder="-">
+                                </td>
+                                <td>
+                                  <input type="number" min="0"  style="width: 100px;" value="{{ (e_1+e_2).toFixed(2) }}" placeholder="-" readonly>
+                                </td>
+                                <td>
+                                  <input type="text" style="width: 130px;" value="{{e.role.name}}" disabled>
+                                </td>
+                                <td>
+                                  <input type="number" min="0"  style="width: 90px;" value="0">
+                                </td>
+                              </tr>
+
+                              <tr ng-if="indexes_3.length == 0">
+                                <td>
+                                  <input type="text" style="width: 120px; border: 1px solid green;" value="-" data-bs-toggle="modal" data-bs-target="#modal-report-id-3" readonly>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 200px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 150px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 100px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 150px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 130px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 90px;" disabled>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="modal modal-blur fade" id="modal-report-id-3" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">LỰA CHỌN NHÂN VIÊN</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <label class="ms-3 mt-2">Tìm kiếm</label>
+                            <div class="row me-3 ms-3 pb-2 border-bottom">
+                              <input type="text" ng-model="getEmploy" placeholder="Nhập từ khóa ..." class="fs-5 p-2">
+                            </div>
+                            <div class="modal-body">
+                              <!-- this is show all of order before -->
+                              <div class="row d-flex justify-content-between align-items-center bg-white p-2 border mb-2" ng-repeat="auth in authorities|filter:getEmploy">
+                                  <span class="text-truncate">
+                                    <input type="checkbox" id="emp-name-{{auth.account.username}}" ng-click="add_3(auth)" class="me-2">
+                                    <label for="emp-name-{{auth.account.username}}">{{auth.account.username}} - {{auth.account.fullname}}</label>
+                                  </span>
+                              </div>
+                  
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn mt-2" data-bs-dismiss="modal">
+                                Chấp nhận
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--  -->
+
+
+                      <!-- report báo cáo tồn kho -->
+                      <div class="card" id="report-id-4">
+                        <div class="table-responsive">
+                          <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
+                              <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng tồn</th>
+                                <th>Số lượng đã bán</th>
+                                <th>Tổng tiền lỗ</th>
+                                <th>Tiền đang thu hồi</th>
+                                <th>Tiền hòa vốn</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-if="indexes_4.length > 0" ng-repeat="p in indexes_4">
+                                <td>
+                                  <input type="text" style="width: 250px;" value="{{p.name}}" data-bs-toggle="modal" data-bs-target="#modal-report-id-4" readonly>
+                                </td>
+                                <td>
+                                  <input type="number" style="width: 100px;" value="{{ p.price }}" placeholder="-" disabled>
+                                </td>
+                                <td>
+                                  <input type="number" style="width: 100px;" ng-model="pr_1" placeholder="-">
+                                </td>
+                                <td>
+                                  <input type="number" style="width: 120px;" ng-model="pr_2" placeholder="-">
+                                </td>
+                                <td>
+                                  <input type="number" style="width: 120px;" value="{{ (pr_1 * p.price).toFixed(2) }}" placeholder="-" readonly />
+                                </td>
+                                <td>
+                                  <input type="number" style="width: 140px;" value="{{ (pr_2 * p.price).toFixed(2) }}" placeholder="-" readonly />
+                                </td>
+                                <td>
+                                  <input type="number" style="width: 100px;" value="{{( (pr_1 * p.price) - (pr_2 * p.price)).toFixed(2)}}" placeholder="-" readonly>
+                                </td>
+                              </tr>
+
+                              <tr ng-if="indexes_4.length == 0">
+                                <td>
+                                  <input type="text" value="-" style="width: 250px; border: 1px solid green;" data-bs-toggle="modal" data-bs-target="#modal-report-id-4" readonly>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 100px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 100px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 120px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 120px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 140px;" disabled>
+                                </td>
+                                <td>
+                                  <input type="text" value="-" style="width: 100px;" disabled>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      
+                      <div class="modal modal-blur fade" id="modal-report-id-4" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">LỰA CHỌN SẢN PHẨM</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <label class="ms-3 mt-2">Tìm kiếm</label>
+                            <div class="row me-3 ms-3 pb-2 border-bottom">
+                              <input type="text" ng-model="getStock" placeholder="Nhập từ khóa ..." class="fs-5 p-2">
+                            </div>
+                            <div class="modal-body">
+                              <div class="row d-flex justify-content-between align-items-center bg-white p-2 border mb-2" ng-repeat="product in stocks|filter:getStock">
+                                  <span class="text-truncate">
+                                    <input type="checkbox" id="stock-name-{{product.id}}" ng-click="add_4(product)" class="me-2">
+                                    <label for="stock-name-{{product.id}}">{{product.name}}</label>
+                                  </span>
+                              </div>
+                  
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn mt-2" data-bs-dismiss="modal">
+                                Chấp nhận
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $("#listPDF").change(function() {
+        var names = "";
+        names = $(this).val().split("\\").pop();
+        console.log(names);
+      });
+    </script>
+  </div>
+</div>
