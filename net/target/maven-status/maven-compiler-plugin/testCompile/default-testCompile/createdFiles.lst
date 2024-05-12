@@ -1,0 +1,6 @@
+com\fastshop\net\model\AccountTest.class
+com\fastshop\net\model\DiscountTest.class
+com\fastshop\net\NetApplicationTests.class
+com\fastshop\net\controller\StaffControllerTest.class
+com\fastshop\net\model\AddressTest.class
+com\fastshop\net\model\ATMTest.class
